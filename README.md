@@ -1,24 +1,45 @@
-# README
+# Мои задачи - backend
+Необходимо сделать API, позволяющее рендерить содержимое страницы, за это отвечает экшн GET /projects, который возвращает всю структуру, необходимую для рендеринга страницы:
+```bash
+[{
+  id: int,
+  title: string,
+  todos: [
+    {
+      id: int,
+      text: string,
+      isCompleted: bool
+    }
+  ]
+}]
+```
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Далее на странице имеется функционал, позволяющий перечеркивать задачи, для этого нужно реализовать отдельный экшн для обновления задачи PATCH /project/:id/todos/:id, который в свою очередь будет обновлять значение checked.
 
-Things you may want to cover:
+Далее рассмотрим окно создания задачи. Тут нужно предусмотреть следующее: задача может быть добавлена в существующий список, либо в новый. Таким образом, если в списке выбора категории выбрать пункт “Новая категория”, должно появиться поле для ввода названия нового списка, и, после сабмита формы, список должен отобразиться на главной странице с новой задачей. Для этих целей на стороне апи лучше всего сделать экшн POST /todos.
 
-* Ruby version
+Стоит за ранее позаботиться о сидах, с которыми будет удобно разрабатывать и проверять приложение. В качестве примера можно использовать этот файл.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Таким образов в результате API должен предоставлять следующие методы:
+```bash
+GET /projects - вернуть все проекты с задачами
+```
+```bash
+POST /todos - создать новую задачу
+{
+    "todo": {
+        "text": "Задача 1"
+    },
+    "project": {
+        "title": "Проект 1"
+    }
+}
+```
+```bash
+PATCH /projects/project_id/todo/id - обновить задачу
+{
+    "todo": {
+        "isComplete": true
+    }
+}
+```
